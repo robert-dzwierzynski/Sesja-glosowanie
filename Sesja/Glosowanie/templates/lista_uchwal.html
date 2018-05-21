@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+    <div class="container">
+
+        <h2>Uchwały</h2>
+        {% if uchwaly.count > 0 %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Uchwała</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in uchwaly %}
+                    {% if u.is_visible %}
+                        <tr onclick="window.location='{{ u.get_absolute_url }}';">
+                            <td>{{u.title}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Nie ma dostępnych uchwał.</p>
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

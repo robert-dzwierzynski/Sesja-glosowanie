@@ -1,0 +1,13 @@
+PYTHOPATH C:\Python34;C:\Python34\Scripts
+path add  C:\Python34;C:\Python34\Scripts
+
+w katalogu Django -> python setup.py install
+
+
+python -m pip install --upgrade pip ( problem z error: Unable to find vcvarsall.bat )
+
+pip install reportlab
+
+pip install --pre xhtml2pdf
+
+pip install -U django-easy-pdf WeasyPrint

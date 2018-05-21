@@ -1,0 +1,39 @@
+<style>
+    li {
+  list-style-type : none;
+}
+
+</style>
+
+{% block content %}
+<div class="container">
+
+{% if uchwala.is_visible %}
+    <h1>{{uchwala.title}}</h1>
+        <br>
+        {{uchwala.body}}
+        <br><br>
+    {% if czy_glosowano %}
+        {% if glos.vote is 0%}
+            <div class="alert alert-danger">
+                Twój głos: <strong>{{ glos.get_str_vote }}</strong>
+            </div>
+        {% elif  glos.vote is 1%}
+            <div class="alert alert-success">
+                Twój głos: <strong>{{ glos.get_str_vote}}</strong>
+            </div>
+        {% else%}
+            <div class="alert alert-warning">
+                Twój głos: <strong>{{ glos.get_str_vote }}</strong>
+            </div>
+        {% endif %}
+    {% else %}
+        <form method="post" action=''>
+            {% csrf_token %}
+            {{ form.vote}}
+            <button class="btn btn-primary" type="submit" name="glosuj">Oddaj glos</button>
+        </form>
+    {% endif %}
+{% endif %}
+</div>
+{% endblock %}

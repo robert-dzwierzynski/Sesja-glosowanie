@@ -1,0 +1,64 @@
+﻿{% load staticfiles %}
+
+<script src="{% static 'js/live.js' %}"></script>
+<script src="{% static 'js/jspdf.js' %}"></script>
+<script src="{% static 'js/html2canvas.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pdf.js' %}"></script>
+
+
+{% block content %}
+
+<div class="container">
+        <div id="pdf">
+
+            <h1>{{uchwala.title}}</h1>
+        <br>
+        {{uchwala.body}}
+        <br><br>
+
+    <table class="table">
+         <thead>
+          <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Głos</th>
+          </tr>
+        </thead>
+        <tr>
+        {% if glosowanie.count > 0 %}
+            {% for g in glosowanie %}
+                {% if g.vote is 0%}
+                    <tr class="danger">
+                            <td>{{ g.id_uzytkownika.first_name }}</td>
+                            <td>{{ g.id_uzytkownika.last_name }}</td>
+                            <td>{{g.get_str_vote}}</td>
+                    </tr>
+                {% elif  g.vote is 1%}
+                    <tr class="success">
+                            <td>{{ g.id_uzytkownika.first_name }}</td>
+                            <td>{{ g.id_uzytkownika.last_name }}</td>
+                            <td>{{g.get_str_vote}}</td>
+                    </tr>
+                {% else%}
+                    <tr class="warning">
+                        <td>{{ g.id_uzytkownika.first_name }}</td>
+                        <td>{{ g.id_uzytkownika.last_name }}</td>
+                        <td>{{g.get_str_vote}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+        {% else %}
+            <p>Brak wyników.</p>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <p>Głosów  za     : {{za}}<br></p>
+    <p>Głosów przeciw: {{przeciw}}<br></p>
+    <p>Wstrzymało się: {{wstrzymal_sie}}<br></p>
+
+	</div>
+    <a href="javascript:genPDF({{uchwala.id}})">PDF</a>
+</div>
+{% endblock %}

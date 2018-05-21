@@ -1,0 +1,69 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<head lang="pl">
+    <meta charset="utf-8">
+
+
+    {% block meta %}
+
+        <!-- Bootstrap -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <script src="{% static 'bootstrap/jquery.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    {% endblock %}
+    <title>
+        {% block title %}
+            Sesja - Gać
+        {% endblock %}
+    </title>
+</head>
+<body>
+    {% block navbar %}
+        <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{% url 'home' %}">Sesja - Gać</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                            <li><a href="{% url 'wszystkie_uchwaly:wszystkie_uchwaly' %}">Wszytkie Uchwały</a></li>
+                        {% endif %}
+                            <li><a href="{% url 'uchwaly:uchwaly' %}">Uchwały</a></li>
+                        {% endif %}
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Logowanie</a></li>
+                        <li><a href="{% url 'uzytkownicy:signup' %}"><span class="glyphicon glyphicon-user"></span> Rejestracja</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        </nav>
+    {% endblock %}
+
+    {% block content %}
+            <!-- treść -->
+    {% endblock %}
+
+    {% block footer %}
+
+    {% endblock %}
+</body>

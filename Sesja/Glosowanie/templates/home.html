@@ -1,0 +1,14 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.is_authenticated %}
+        <p> Jesteś zalogowany jako: {{ user.first_name }} {{ user.last_name }} ({{ user.username}}) </p>
+    {% else %}
+        Nie jesteś zalogowany. <a href="{% url 'login' %}">Zaloguj się</a>  lub <a href="{% url 'uzytkownicy:signup' %}">Zarejestruj</a>
+    {% endif %}
+</div>
+{% endblock %}
